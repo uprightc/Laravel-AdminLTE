@@ -47,7 +47,7 @@ class ActiveChecker
 
     protected function checkExact($url)
     {
-        return $this->checkPattern($url);
+        return $this->checkPattern($url) || $this->checkPattern($url.'?*');
     }
 
     protected function checkSub($url)
