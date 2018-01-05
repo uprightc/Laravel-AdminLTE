@@ -1,0 +1,20 @@
+<?php
+namespace App\AdminLTEMenuFilter;
+use JeroenNoten\LaravelAdminLte\Menu\Builder;
+use JeroenNoten\LaravelAdminLte\Menu\Filters\FilterInterface;
+use Entrust;
+
+class EntrustFilter implements FilterInterface{
+  public function transform($item, Builder $builder)    {
+    if (isset($item['hasRole']) && ! Entrust::hasRole($item['hasRole'])) {
+      return false;
+    }
+    if (isset($item['can']) && ! Entrust::can($item['can'])) {
+      return false;
+    }
+    if (isset($item['ability']) && ! Entrust::ability($item['ability']['roles'], $item['ability']['permissions'])) {
+      return false;
+    }
+    return $item;  
+  }
+}
